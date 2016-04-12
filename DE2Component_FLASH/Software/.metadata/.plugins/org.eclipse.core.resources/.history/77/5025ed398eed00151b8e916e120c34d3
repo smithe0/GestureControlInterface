@@ -1,0 +1,274 @@
+/*************************************************************************
+* Copyright (c) 2004 Altera Corporation, San Jose, California, USA.      *
+* All rights reserved. All use of this software and documentation is     *
+* subject to the License Agreement located at the end of this file below.*
+**************************************************************************
+* Description:                                                           *
+* The following is a simple hello world program running MicroC/OS-II.The * 
+* purpose of the design is to be a very simple application that just     *
+* demonstrates MicroC/OS-II running on NIOS II.The design doesn't account*
+* for issues such as checking system call return codes. etc.             *
+*                                                                        *
+* Requirements:                                                          *
+*   -Supported Example Hardware Platforms                                *
+*     Standard                                                           *
+*     Full Featured                                                      *
+*     Low Cost                                                           *
+*   -Supported Development Boards                                        *
+*     Nios II Development Board, Stratix II Edition                      *
+*     Nios Development Board, Stratix Professional Edition               *
+*     Nios Development Board, Stratix Edition                            *
+*     Nios Development Board, Cyclone Edition                            *
+*   -System Library Settings                                             *
+*     RTOS Type - MicroC/OS-II                                           *
+*     Periodic System Timer                                              *
+*   -Know Issues                                                         *
+*     If this design is run on the ISS, terminal output will take several*
+*     minutes per iteration.                                             *
+**************************************************************************/
+
+#include <unistd.h>
+#include <stdio.h>
+#include <altera_up_avalon_usb.h>
+#include <altera_up_avalon_usb_ptd.h>
+#include <altera_up_avalon_usb_regs.h>
+#include <altera_up_avalon_usb_high_level_driver.h>
+#include <altera_up_avalon_usb_low_level_driver.h>
+
+#include "includes.h"
+#include "system.h"
+#include "device_info.h"
+#include "usb_commands.h"
+#include "isr.h"
+#include "request_handler.h"
+
+//-------------------------------------------------------------------------//
+//  Global Variable
+D13FLAGS bD13flags;
+USBCHECK_DEVICE_STATES bUSBCheck_Device_State;
+CONTROL_XFER ControlData;
+IO_REQUEST ioRequest;
+//-------------------------------------------------------------------------//
+
+typedef enum {
+	Setup,
+	Addressed,
+	Suspended
+} StateMachine;
+
+/* Definition of Task Stacks */
+#define   TASK_STACKSIZE       2048
+OS_STK    task1_stk[TASK_STACKSIZE];
+OS_STK    task2_stk[TASK_STACKSIZE];
+
+/* Definition of Task Priorities */
+#define TASK1_PRIORITY      1
+#define TASK2_PRIORITY      2
+
+void SetupbD13flags();
+void SetupbUSBCheck_Device_State();
+void SetupControlData();
+void SetupioRequest();
+
+/* Maintains USB communication with host computer */
+void task1(void* pdata)
+{
+	StateMachine state;
+	state = Setup;
+	state = 5;
+	while (1)
+	{
+		if(state == Setup) {
+
+		}
+		else if (state == Addressed) {
+
+		}
+		else if (state == Suspended) {
+
+		}
+
+		usleep(1);
+	}
+	//OSTimeDlyHMSM(0, 0, 1, 0);
+}
+
+/* Task 2, other tasks */
+void task2(void* pdata)
+{
+	while (1)
+	{
+		OSTimeDlyHMSM(0, 0, 3, 0);
+	}
+}
+
+/* The main function creates two task and starts multi-tasking */
+int main(void)
+{
+
+	//Create instance of USB device.
+	//ALTERA_UP_AVALON_USB_INSTANCE(USB_0, myUSBCore);
+	//printf("ISP1362 Addr_base: %d\n", myUSBCore.base);
+	//printf("ISP1362 irq_base: %d\n", myUSBCore.irq_base);
+	//printf("ISP1362 irq_id: %d\n", myUSBCore.irq_id);
+
+	//SetupbD13flags(); //My own attempt to control flow flags. Consider getting rid of this.
+
+	//SetupbUSBCheck_Device_State(); //Other possible global variable set up functions
+	//SetupControlData();
+	//SetupioRequest();
+
+	//printf("\nRegAccess\n");
+	//usb_RegAccess(); //Prints info about ISP1362
+	//printf("\n");
+
+	//Main loop flow control based on example project. Something is wrong with how this works..
+    /*
+    bUSBCheck_Device_State.State_bits.DEVICE_DEFAULT_STATE = 1;
+    bUSBCheck_Device_State.State_bits.DEVICE_ADDRESS_STATE = 0;
+    bUSBCheck_Device_State.State_bits.DEVICE_CONFIGURATION_STATE = 0;
+    bUSBCheck_Device_State.State_bits.RESET_BITS = 0;
+    */
+
+	isr_Disable(); // Interrupt disable function
+	//usb_DisconnectUSB();
+	usleep(1000000); //1 second sleep.
+	usb_ResetDevice();
+    usleep(1000000); //1 second sleep.
+    usb_DisconnectUSB();
+	usb_ConnectUSB();
+	//usb_AcquireD13(USB_0_IRQ, (void*)isr_main); // Register main interrupt handler. With what? How does this work?
+	//info_CheckChipID(); // Just checks which version of controller chip this device is. Which is 1362, in case you were curious.
+	bD13flags.bits.verbose=1;
+	isr_Enable();
+
+	//pre_addr = usb_GetAddress();
+	//printf("Address: %x\n", pre_addr);
+
+	OSTaskCreateExt(task1,
+			NULL,
+			(void *)&task1_stk[TASK_STACKSIZE-1],
+			TASK1_PRIORITY,
+			TASK1_PRIORITY,
+			task1_stk,
+			TASK_STACKSIZE,
+			NULL,
+			0);
+              
+               
+	OSTaskCreateExt(task2,
+			NULL,
+			(void *)&task2_stk[TASK_STACKSIZE-1],
+			TASK2_PRIORITY,
+			TASK2_PRIORITY,
+			task2_stk,
+			TASK_STACKSIZE,
+			NULL,
+			0);
+	OSStart();
+	return 0;
+}
+
+// Don't know if I need / should have this. Ideally I'd like to avoid global variables entirely.
+void SetupbD13flags() {
+	bD13flags.bits.bus_reset = 1;
+	bD13flags.bits.suspend = 1;
+	bD13flags.bits.At_IRQL1 = 1;
+	bD13flags.bits.configuration = 1;
+	bD13flags.bits.remote_wakeup = 1;
+	bD13flags.bits.Reserved00 = 3;
+	        // Byte 1
+	bD13flags.bits.DCP_state = 4;
+	bD13flags.bits.DCP_IOorMEM = 1;
+	bD13flags.bits.ISO_state = 3;
+	        // Byte 2
+	bD13flags.bits.setup_dma = 1;
+	bD13flags.bits.control_write_processed = 1;
+	bD13flags.bits.dma_disable = 1;
+	bD13flags.bits.dma_state = 2;
+	bD13flags.bits.toggle_bit_corrected = 1;
+	bD13flags.bits.control_out_done = 1;
+	bD13flags.bits.Reserved20 = 1;
+	        // Byte 3
+	bD13flags.bits.verbose = 1;
+	bD13flags.bits.timer = 1;
+	bD13flags.bits.dbg = 1;
+	bD13flags.bits.Reserved30 = 5;
+}
+
+void SetupbUSBCheck_Device_State() {
+
+}
+
+void SetupControlData() {
+
+}
+
+void SetupioRequest() {
+
+}
+
+#if 0 // This is taken out because it is an old control loop that I am re-doing
+//printf("While\n");
+		if (bUSBCheck_Device_State.State_bits.RESET_BITS == 1)
+		{
+			printf("Disable\n");
+			isr_Disable();
+			break;
+		}
+		if (bD13flags.bits.suspend)
+		{
+			printf("Setup Token\n");
+			isr_Disable();
+			bD13flags.bits.suspend= 0;
+			isr_Enable();
+			SuspendChange();
+		} // Suspend Change Handler
+		if (bD13flags.bits.DCP_state == USB_FSM_SETUPPROC)
+		{
+			printf("Setup Token\n");
+			isr_Disable();
+			SetupTokenHandler();
+			isr_Enable();
+		} // Setup Token Handler
+		if ((bD13flags.bits.DCP_state == USB_FSM_REQUESTPROC) && !ControlData.Abort)
+		{
+			printf("Device Request\n");
+			isr_Disable();
+			bD13flags.bits.DCP_state = 0x00;
+			DeviceRequestHandler();
+			isr_Enable();
+		} // Device Request Handler
+		usleep(1);
+		//OSTimeDlyHMSM(0, 0, 0, 1);
+#endif
+/******************************************************************************
+*                                                                             *
+* License Agreement                                                           *
+*                                                                             *
+* Copyright (c) 2004 Altera Corporation, San Jose, California, USA.           *
+* All rights reserved.                                                        *
+*                                                                             *
+* Permission is hereby granted, free of charge, to any person obtaining a     *
+* copy of this software and associated documentation files (the "Software"),  *
+* to deal in the Software without restriction, including without limitation   *
+* the rights to use, copy, modify, merge, publish, distribute, sublicense,    *
+* and/or sell copies of the Software, and to permit persons to whom the       *
+* Software is furnished to do so, subject to the following conditions:        *
+*                                                                             *
+* The above copyright notice and this permission notice shall be included in  *
+* all copies or substantial portions of the Software.                         *
+*                                                                             *
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR  *
+* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,    *
+* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE *
+* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER      *
+* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING     *
+* FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER         *
+* DEALINGS IN THE SOFTWARE.                                                   *
+*                                                                             *
+* This agreement shall be governed in all respects by the laws of the State   *
+* of California and by the laws of the United States of America.              *
+* Altera does not recommend, suggest or require that this reference design    *
+* file be used in conjunction or combination with any other product.          *
+******************************************************************************/

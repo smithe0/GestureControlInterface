@@ -1,0 +1,136 @@
+Restore Archived Project report for DE2Component
+Sat Mar 05 15:26:49 2016
+Quartus II 64-Bit Version 12.1 Build 243 01/31/2013 Service Pack 1 SJ Web Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Restore Archived Project Summary
+  3. Restore Archived Project Messages
+  4. Files Restored
+  5. Files Not Restored
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 1991-2012 Altera Corporation
+Your use of Altera Corporation's design tools, logic functions 
+and other software and tools, and its AMPP partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Altera Program License 
+Subscription Agreement, Altera MegaCore Function License 
+Agreement, or other applicable license agreement, including, 
+without limitation, that your use is for the sole purpose of 
+programming logic devices manufactured by Altera and sold by 
+Altera or its authorized distributors.  Please refer to the 
+applicable agreement for further details.
+
+
+
++-------------------------------------------------------------------------+
+; Restore Archived Project Summary                                        ;
++---------------------------------+---------------------------------------+
+; Restore Archived Project Status ; Successful - Sat Mar 05 15:26:49 2016 ;
+; Revision Name                   ; DE2Component                          ;
+; Top-level Entity Name           ; DE2Component                          ;
+; Family                          ; Cyclone II                            ;
++---------------------------------+---------------------------------------+
+
+
++-----------------------------------+
+; Restore Archived Project Messages ;
++-----------------------------------+
+Info: Successfully restored 'D:/School/Capstone - ECE492/git/GestureGloveCapstone/DE2Component.qar' into the 'D:/School/Capstone - ECE492/git/GestureGloveCapstone/DE2Component_restored/' directory
+Info: Generated report 'DE2Component.restore.rpt'
+Info (23030): Evaluation of Tcl script c:/altera/quartus/common/tcl/apps/qpm/qar.tcl was successful
+Info: Quartus II 64-Bit Shell was successful. 0 errors, 0 warnings
+    Info: Peak virtual memory: 299 megabytes
+    Info: Processing ended: Sat Mar 05 15:26:49 2016
+    Info: Elapsed time: 00:00:10
+    Info: Total CPU time (on all processors): 00:00:03
+
+
++---------------------------------------------------------------------------------------+
+; Files Restored                                                                        ;
++---------------------------------------------------------------------------------------+
+; File Name                                                                             ;
++---------------------------------------------------------------------------------------+
+; assignment_defaults.qdf                                                               ;
+; DE2Component.qpf                                                                      ;
+; DE2Component.qsf                                                                      ;
+; DE2Component.vhd                                                                      ;
+; USB_Component_hw.tcl                                                                  ;
+; db/ip/niosII_system/niosII_system.v                                                   ;
+; db/ip/niosII_system/submodules/DE2_CONSTANTS.vhd                                      ;
+; db/ip/niosII_system/submodules/altera_avalon_sc_fifo.v                                ;
+; db/ip/niosII_system/submodules/altera_avalon_st_clock_crosser.v                       ;
+; db/ip/niosII_system/submodules/altera_avalon_st_handshake_clock_crosser.v             ;
+; db/ip/niosII_system/submodules/altera_avalon_st_pipeline_base.v                       ;
+; db/ip/niosII_system/submodules/altera_merlin_address_alignment.sv                     ;
+; db/ip/niosII_system/submodules/altera_merlin_arbitrator.sv                            ;
+; db/ip/niosII_system/submodules/altera_merlin_burst_adapter.sv                         ;
+; db/ip/niosII_system/submodules/altera_merlin_burst_uncompressor.sv                    ;
+; db/ip/niosII_system/submodules/altera_merlin_master_agent.sv                          ;
+; db/ip/niosII_system/submodules/altera_merlin_master_translator.sv                     ;
+; db/ip/niosII_system/submodules/altera_merlin_slave_agent.sv                           ;
+; db/ip/niosII_system/submodules/altera_merlin_slave_translator.sv                      ;
+; db/ip/niosII_system/submodules/altera_merlin_width_adapter.sv                         ;
+; db/ip/niosII_system/submodules/altera_reset_controller.sdc                            ;
+; db/ip/niosII_system/submodules/altera_reset_controller.v                              ;
+; db/ip/niosII_system/submodules/altera_reset_synchronizer.v                            ;
+; db/ip/niosII_system/submodules/niosII_system_addr_router.sv                           ;
+; db/ip/niosII_system/submodules/niosII_system_addr_router_001.sv                       ;
+; db/ip/niosII_system/submodules/niosII_system_altpll_0.v                               ;
+; db/ip/niosII_system/submodules/niosII_system_cmd_xbar_demux.sv                        ;
+; db/ip/niosII_system/submodules/niosII_system_cmd_xbar_demux_001.sv                    ;
+; db/ip/niosII_system/submodules/niosII_system_cmd_xbar_mux.sv                          ;
+; db/ip/niosII_system/submodules/niosII_system_green_leds.v                             ;
+; db/ip/niosII_system/submodules/niosII_system_id_router.sv                             ;
+; db/ip/niosII_system/submodules/niosII_system_id_router_001.sv                         ;
+; db/ip/niosII_system/submodules/niosII_system_id_router_004.sv                         ;
+; db/ip/niosII_system/submodules/niosII_system_id_router_010.sv                         ;
+; db/ip/niosII_system/submodules/niosII_system_irq_mapper.sv                            ;
+; db/ip/niosII_system/submodules/niosII_system_jtag_uart_0.v                            ;
+; db/ip/niosII_system/submodules/niosII_system_jtag_uart_0_input_mutex.dat              ;
+; db/ip/niosII_system/submodules/niosII_system_jtag_uart_0_input_stream.dat             ;
+; db/ip/niosII_system/submodules/niosII_system_jtag_uart_0_output_stream.dat            ;
+; db/ip/niosII_system/submodules/niosII_system_nios2_qsys_0.sdc                         ;
+; db/ip/niosII_system/submodules/niosII_system_nios2_qsys_0.v                           ;
+; db/ip/niosII_system/submodules/niosII_system_nios2_qsys_0_jtag_debug_module_sysclk.v  ;
+; db/ip/niosII_system/submodules/niosII_system_nios2_qsys_0_jtag_debug_module_tck.v     ;
+; db/ip/niosII_system/submodules/niosII_system_nios2_qsys_0_jtag_debug_module_wrapper.v ;
+; db/ip/niosII_system/submodules/niosII_system_nios2_qsys_0_oci_test_bench.v            ;
+; db/ip/niosII_system/submodules/niosII_system_nios2_qsys_0_ociram_default_contents.mif ;
+; db/ip/niosII_system/submodules/niosII_system_nios2_qsys_0_rf_ram_a.mif                ;
+; db/ip/niosII_system/submodules/niosII_system_nios2_qsys_0_rf_ram_b.mif                ;
+; db/ip/niosII_system/submodules/niosII_system_nios2_qsys_0_test_bench.v                ;
+; db/ip/niosII_system/submodules/niosII_system_onchip_memory2_0.hex                     ;
+; db/ip/niosII_system/submodules/niosII_system_onchip_memory2_0.v                       ;
+; db/ip/niosII_system/submodules/niosII_system_rsp_xbar_demux.sv                        ;
+; db/ip/niosII_system/submodules/niosII_system_rsp_xbar_demux_004.sv                    ;
+; db/ip/niosII_system/submodules/niosII_system_rsp_xbar_mux.sv                          ;
+; db/ip/niosII_system/submodules/niosII_system_rsp_xbar_mux_001.sv                      ;
+; db/ip/niosII_system/submodules/niosII_system_sdram_0.v                                ;
+; db/ip/niosII_system/submodules/niosII_system_sram_0.v                                 ;
+; db/ip/niosII_system/submodules/niosII_system_switches.v                               ;
+; db/ip/niosII_system/submodules/niosII_system_sysid_qsys_0.v                           ;
+; db/ip/niosII_system/submodules/niosII_system_timer_0.v                                ;
+; db/ip/niosII_system/submodules/usb_component.vhd                                      ;
+; incremental_db/compiled_partitions/DE2Component.db_info                               ;
+; niosII_system.qsys                                                                    ;
++---------------------------------------------------------------------------------------+
+
+
++--------------------+
+; Files Not Restored ;
++--------------------+
+; File Name          ;
++--------------------+
+
+

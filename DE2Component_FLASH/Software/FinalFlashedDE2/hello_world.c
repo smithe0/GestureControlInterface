@@ -249,22 +249,11 @@ int main() {
 
 			read_FIFO_used = alt_up_rs232_get_used_space_in_read_FIFO(rs232_dev);
 
-			/*
-			if (read_FIFO_used > READ_FIFO_EMPTY){
-				alt_up_rs232_read_data(rs232_dev, &data_R8, &p_error);
-				alt_printf("%c", data_R8);
-				//if(data_R8 == '\n'){
-					//tcount++;
-					//printf("tcount %d\n", tcount);
-				//}
-			}*/
+
 
 			if (read_FIFO_used > READ_FIFO_EMPTY){
 				alt_up_rs232_read_data(rs232_dev, &data_R8, &p_error);
-				//printf("counti %d\n",counti);
-				//printf("streamstart: %d\n", streamStart);
-				//printf("countstart: %d\n", countStart);
-				//alt_printf("%c", data_R8);
+
 				if(!streamStart && data_R8 == 'C'){
 					printf("Start\n");
 					printf("---------\n");
@@ -273,7 +262,7 @@ int main() {
 					cycleCount = 0;
 					counti = 0;
 					inc_i = 0;
-					//printf("%d\n", i);
+				
 					continue;
 				}
 
@@ -324,12 +313,12 @@ int main() {
 
 
 				if(streamStart && !countStart && !initStart && data_R8 == '\n'){
-					//printf("counti %d\n", counti);
+					
 					switch (cycleCount){
 
 						case 0:
 							ay[counti] = atoi(buffer);
-							//printf("ay: %d\n",ay[counti]);
+							
 
 							vNewy = vOldy + (ay[counti] );
 							VAveragey += vNewy;
@@ -338,14 +327,13 @@ int main() {
 							break;
 						case 1:
 							az[counti] = atoi(buffer);
-							//printf("counti %d\n", counti);
-							//printf("az: %d\n",az[counti]);
+						
 
 							vNewz = vOldz + (az[counti] );
 							VAveragez += vNewz;
 							vOldz = vNewz;
 							counti++;
-							//printf("counti %d\n", counti);
+						
 							cycleCount = 0;
 							break;
 					}
@@ -354,43 +342,35 @@ int main() {
 					for(clearCounter = 0; clearCounter <8; clearCounter++){
 						buffer[clearCounter] = '\0';
 					}
-					//printf("%measurement %d: %d\n", measurementNumber, measurements[measurementNumber]);
+				
 					continue;
 				}
 
 				if(streamStart && !countStart && data_R8 == 'E'){
-								//printf("Counti End %d----------------------\n",counti);
-								//printf("Count End %d----------------------\n",count);
+						
 
 								int test;
 
 #if XY_DATA_PRINT
 								for(test=0;test<count;test++){
-									//printf("test %d\n",test);
 									printf("az: %d\n",az[test]);
 								}
 								printf("---------\n");
 								for(test=0;test<count;test++){
-									//printf("test %d\n",test);
 									printf("ay: %d\n",ay[test]);
 								}
 								printf("---------\n");
-								/*
-								for(test=0;test<count;test++){
-									//printf("test %d\n",test);
-									printf("ax: %d\n",ax[test]);
-								}*/
-								//printf("---------\n");
+					
 #endif
 
 								printf("Initial x: %d\n", initax);
 								printf("Initial y: %d\n", initay);
 								printf("Initial z: %d\n", initaz);
 
-								//VAveragex = VAveragex/count;
+								
 								VAveragey = VAveragey/count;
 								VAveragez = VAveragez/count;
-								//printf("Vx average: %d\n" ,VAveragex);
+								
 								printf("Vy average: %d\n" ,VAveragey);
 								printf("Vz average: %d\n" ,VAveragez);
 								gloveOrientation = orientation(initax,initay,initaz);

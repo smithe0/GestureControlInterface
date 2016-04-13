@@ -1,3 +1,13 @@
+/*
+ * This file contains the ISR (Interrupt service routine) for the USB
+ * component hardware interrupt. usb_isr is registered in main.c
+ *
+ *	This file is from the DE2 demonstration project with a few exceptions.
+ *	The code has been modified in the following ways:
+ *		- Modified Isr_BusReset function
+ *		- Removed unnecessary portions of usb_isr
+ *		- Isr_Ep01Done is original with the exception of the name
+ */
 
 #include <stdio.h>
 #include <string.h>
@@ -9,7 +19,6 @@
 #include "mainloop.h"
 #include "usb_irq.h"
 #include "chap_9.h"
-#include "isp1362_includes.h"
 #include "system.h"
 
 // ************************************************************************
@@ -86,8 +95,6 @@ void Isr_BusReset(void)
 	new_report.reserved = 0x00;
 	new_report.keycode[0] = 0x00;
 
-    //TODO: Reset Everything needed to reset program. Basically.
-
     config_endpoints();
 }
 
@@ -137,14 +144,11 @@ void Isr_Ep00RxDone(void)
         }
         else
             bD13flags.bits.DCP_state = USBFSM4DCP_SETUPPROC;
-        //printf("StateMain : %x\n",bD13flags.bits.DCP_state);
     }
     else /* not a setup packet, just a Data Out Packet */
     {
-    	//printf("StateElse : %x\n",bD13flags.bits.DCP_state);
         switch (bD13flags.bits.DCP_state)
         {
-
         case USBFSM4DCP_DATAOUT:
 
             i = Hal4D13_ReadEndpoint(EPINDEX4EP0_CONTROL_OUT, ControlData.dataBuffer + ControlData.wCount,
@@ -158,7 +162,6 @@ void Isr_Ep00RxDone(void)
             }
             break;
         case USBFSM4DCP_HANDSHAKE:
-        	//printf("HANDSHAKE\n");
             bD13flags.bits.DCP_state = USBFSM4DCP_IDLE;
             break;
 
@@ -229,15 +232,9 @@ void Isr_Ep01Done(void) {
 	 * endpoint 1. When this interrupt it fired it means the host has received
 	 * a packet from this endpoint.
 	 */
-	printf("Packet Received Dood.\n");
-
-	//I'm currenly using this to set the ready to send packet to high, but probably I will just check to see if the buffers are full in each iteration.
 	bD13flags.bits.DCP_state = USBFSM4DCP_INTR1DONE;
 
 	UCHAR err = Hal4D13_GetErrorCode(EPINDEX4EP01);
 	UCHAR stat = Hal4D13_GetEndpointStatusWInteruptClear(EPINDEX4EP01); //Interrupt Clear
-
-	// print endpoint status and error registers
-	//printf("Status = %x : Err = %x\n", stat, err);
 }
 

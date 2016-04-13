@@ -2,11 +2,11 @@
 <section name="Workbench">
 	<section name="completion_proposal_size">
 	</section>
+	<section name="RenameInformationPopup">
+	</section>
 	<section name="org.eclipse.cdt.ui.text.hover.CMacroExpansionExploration.internal">
 		<item value="745" key="size.width"/>
 		<item value="246" key="size.height"/>
-	</section>
-	<section name="RenameInformationPopup">
 	</section>
 	<section name="CRenameRefactoringInputPage">
 	</section>

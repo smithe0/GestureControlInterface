@@ -1,5 +1,17 @@
+/*
+ * This file defines many constants and structs related to the USB
+ * specification.
+ *
+ *	This file is from the DE2 demonstration project with a few exceptions.
+ *	The code has been modified in the following ways:
+ *		- Definitions relating to HID have been added
+ *		- _USB_CONFIGURATION_DESCRIPTOR_a struct modified
+ *		- HID descriptor struct added
+ */
+
 #ifndef   __USB_H__
 #define   __USB_H__
+
 
 #define HID_KEY				1
 #define HID_MOUSE			0
@@ -282,16 +294,6 @@ typedef struct _USB_ENDPOINT_DESCRIPTOR {
     USHORT wMaxPacketSize;
     UCHAR bInterval;
 } USB_ENDPOINT_DESCRIPTOR, *PUSB_ENDPOINT_DESCRIPTOR;
-
-
-//typedef struct _USB_STRING_LANGUAGE_DESCRIPTOR {
-//  UCHAR   bLengthL;/
-//  UCHAR   bDescriptorTypeL;
-//  UCHAR   ulanguageID_LL;
-//  UCHAR   ulanguageID_HL;
-//} USB_STRING_LANGUAGE_DESCRIPTOR,*PUSB_STRING_LANGUAGE_DESCRIPTOR;
-
-
 
 typedef struct _USB_STRING_DESCRIPTOR {
     UCHAR bLength;

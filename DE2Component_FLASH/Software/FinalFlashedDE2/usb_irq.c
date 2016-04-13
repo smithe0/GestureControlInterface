@@ -5,6 +5,9 @@
 /*
  *	This file is only for enabling and disabling interrupts
  *
+ *	With the exception of changing function names this file
+ *	is unmodified code from the demonstration project.
+ *
  */
 
 alt_irq_context status;

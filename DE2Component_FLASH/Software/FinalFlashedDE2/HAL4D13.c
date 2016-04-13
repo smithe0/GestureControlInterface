@@ -1,3 +1,10 @@
+/*	This files contains all the helper functions for writing to ISP1362 USB controller registers
+ *
+ *	This file is from the DE2 demonstration project.
+ *	The code was largely unmodified except for replacing the base address in every function
+ *	with: USB_0_BASE as generated in system.h
+ */
+
 #include <io.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -7,7 +14,6 @@
 #include "BasicTyp.h"
 #include "HAL4D13.h"
 #include "usb_irq.h"
-#include "ISP1362_HAL.h"
 
 /*
 // ************************************************************************

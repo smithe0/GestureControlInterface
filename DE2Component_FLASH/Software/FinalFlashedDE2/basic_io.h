@@ -1,3 +1,7 @@
+/*
+ * This file is taken from the DE2 demonstration project.
+ */
+
 #ifndef   __basic_io_H__
 #define   __basic_io_H__
 

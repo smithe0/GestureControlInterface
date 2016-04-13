@@ -1,11 +1,11 @@
 /*
  * This file contains the functions for handling HID class requests.
+ * All code in this file is original.
  * 
  * They are called from the MAINLOOP file within DeviceRequest_Handler.
- * Most are not required for an HID keyboard; The only manditory class requests
+ * Most are not required for an HID keyboard; The only mandatory class requests
  * are:
  *    - SetIdle
- *    - GetIdle
  *    - GetReport
 */
 
@@ -23,8 +23,6 @@ void HID_Get_Report() {
    UCHAR   bDescriptor =      MSB(ControlData.DeviceRequest.wValue);
    UCHAR   bDescriptorIndex = LSB(ControlData.DeviceRequest.wValue);
    USHORT  bLen = ControlData.DeviceRequest.wLength;
-   // printf("bDescri = %d : ",bDescriptor);
-   // printf("Index = %d\n",bDescriptorIndex);
 
    if(sizeof(new_report) <= bLen){
       Chap9_BurstTransmitEP0((PUCHAR)&new_report, sizeof(new_report));
@@ -45,12 +43,11 @@ void HID_Set_Report() {
 }
 
 void HID_Set_Idle() {
-   printf("Set Idle\n");
 
    UCHAR duration = MSB(ControlData.DeviceRequest.wValue);
    UCHAR reportID = LSB(ControlData.DeviceRequest.wValue);
 
-   printf("Duration: %x, ReportID: %x\n", duration, reportID);
+   //printf("Duration: %x, ReportID: %x\n", duration, reportID);
 
    hid_settings.idle_time = 0;
    if(duration != 0) {

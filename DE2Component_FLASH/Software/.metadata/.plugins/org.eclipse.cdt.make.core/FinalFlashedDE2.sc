@@ -4,6 +4,9 @@
 <scannerInfo id="org.eclipse.cdt.make.core.discoveredScannerInfo">
 <instance id="preference.org.eclipse.cdt.managedbuilder.core.configurationDataProvider.1195310825;preference.org.eclipse.cdt.managedbuilder.core.configurationDataProvider.1195310825.;cdt.managedbuild.tool.gnu.cpp.compiler.cygwin.base.433820812;cdt.managedbuild.tool.gnu.cpp.compiler.input.cygwin.1985222543">
 <collector id="org.eclipse.cdt.make.core.PerProjectSICollector">
+<includePath path="D:/School/CapstoneECE492/git/GestureControlInterface/DE2Component_FLASH/Software/FinalFlashedDE2_bsp/HAL/inc"/>
+<includePath path="D:/School/CapstoneECE492/git/GestureControlInterface/DE2Component_FLASH/Software/FinalFlashedDE2_bsp/"/>
+<includePath path="D:/School/CapstoneECE492/git/GestureControlInterface/DE2Component_FLASH/Software/FinalFlashedDE2_bsp/drivers/inc"/>
 <includePath path="C:/Users/Eric/Desktop/DE2Component_FLASH/Software/FinalFlashedDE2_bsp/HAL/inc"/>
 <includePath path="C:/Users/Eric/Desktop/DE2Component_FLASH/Software/FinalFlashedDE2_bsp/"/>
 <includePath path="C:/Users/Eric/Desktop/DE2Component_FLASH/Software/FinalFlashedDE2_bsp/drivers/inc"/>
@@ -232,6 +235,9 @@
 </instance>
 <instance id="preference.org.eclipse.cdt.managedbuilder.core.configurationDataProvider.1195310825;preference.org.eclipse.cdt.managedbuilder.core.configurationDataProvider.1195310825.;cdt.managedbuild.tool.gnu.c.compiler.cygwin.base.1160573125;cdt.managedbuild.tool.gnu.c.compiler.input.cygwin.1148237164">
 <collector id="org.eclipse.cdt.make.core.PerProjectSICollector">
+<includePath path="D:/School/CapstoneECE492/git/GestureControlInterface/DE2Component_FLASH/Software/FinalFlashedDE2_bsp/HAL/inc"/>
+<includePath path="D:/School/CapstoneECE492/git/GestureControlInterface/DE2Component_FLASH/Software/FinalFlashedDE2_bsp/"/>
+<includePath path="D:/School/CapstoneECE492/git/GestureControlInterface/DE2Component_FLASH/Software/FinalFlashedDE2_bsp/drivers/inc"/>
 <includePath path="C:/Users/Eric/Desktop/DE2Component_FLASH/Software/FinalFlashedDE2_bsp/HAL/inc"/>
 <includePath path="C:/Users/Eric/Desktop/DE2Component_FLASH/Software/FinalFlashedDE2_bsp/"/>
 <includePath path="C:/Users/Eric/Desktop/DE2Component_FLASH/Software/FinalFlashedDE2_bsp/drivers/inc"/>

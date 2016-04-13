@@ -1,3 +1,11 @@
+/*
+ * This file is taken from the DE2 demonstration project.
+ *
+ * Changes made:
+ * 	- _HID_SETTINGS added
+ * 	- _HID_KEYS_REPORT added
+ *
+ */
 
 #ifndef __BASICTYPE_H__
 #define __BASICTYPE_H__
@@ -131,7 +139,6 @@ typedef struct _CONTROL_XFER
 
 } CONTROL_XFER, * PCONTROL_XFER;
 
-//TODO: Determine if this is in any way needed
 typedef struct _HID_SETTINGS {
 	int idle_time;
 	enum state {
@@ -140,7 +147,6 @@ typedef struct _HID_SETTINGS {
 		disconnect
 	} state;
 } HID_SETTINGS;
-
 
 typedef struct _HID_KEYS_REPORT {
 	UCHAR modifier;

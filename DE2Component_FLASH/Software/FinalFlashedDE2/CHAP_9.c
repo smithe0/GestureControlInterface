@@ -1,3 +1,11 @@
+/*	This file contains functions that handle all standard USB requests.
+ * 	It also creates instances of all the USB descriptors used
+ *
+ *	This file is from the DE2 demonstration project with a few exceptions.
+ *	The code has been modified in the following ways:
+ *		- Values in the descriptors (configuration, device, HID report)
+ *		- Changed the device name string descriptor
+ */
 
 #include <stdio.h>
 #include <string.h>
@@ -43,12 +51,7 @@ UCHAR ALTERNATIVE_SETTING = 0;
 #define EP2_RX_FIFO_SIZE   64
 #define EP2_PACKET_SIZE    64
 
-
-//#define CONFIG_DESCRIPTOR_LENGTH    NUM_ALTINTERFACE * sizeof(USB_CONFIGURATION_DESCRIPTOR) + NUM_ALTINTERFACE * sizeof(USB_INTERFACE_DESCRIPTOR) + NUM_ENDPOINTS * sizeof(USB_ENDPOINT_DESCRIPTOR)
-
-//#define CONFIG_DESCRIPTOR_LENGTH    sizeof( USB_CONFIGURATION_DESCRIPTOR)//NUM_ALTINTERFACE * sizeof(USB_CONFIGURATION_DESCRIPTOR) +NUM_ALTINTERFACE * sizeof(USB_INTERFACE_DESCRIPTOR) +4 * NUM_ALTINTERFACE * sizeof(USB_ENDPOINT_DESCRIPTOR) 
-
-USB_DEVICE_DESCRIPTOR DeviceDescr =//<<
+USB_DEVICE_DESCRIPTOR DeviceDescr =
 {
 		18,							//bLength
 		USB_DEVICE_DESCRIPTOR_TYPE,	//bDescriptorType
@@ -72,9 +75,9 @@ USB_DEVICE_DESCRIPTOR DeviceDescr =//<<
 
 USB_CONFIGURATION_DESCRIPTOR_a ConfigDescr_a=//<<
 {
-		0x09,	//bLength
+		0x09,									//bLength
 		USB_CONFIGURATION_DESCRIPTOR_TYPE, 		//bDescriptorType
-		0x22, //wTotalLength_L
+		0x22, 									//wTotalLength_L
 		0x00, 									//wTotalLength_H, always 00
 		0x01, 									//bNumInterfaces
 		0x01, 									//bConfigurationValue
@@ -83,35 +86,35 @@ USB_CONFIGURATION_DESCRIPTOR_a ConfigDescr_a=//<<
 		0x00,	//0x01							//MaxPower: Self Powered. This maybe should be zero... I'll check.
 
 		/* Interface Descriptor: HID Keyboard */
-		0x09,  //bLength
-		USB_INTERFACE_DESCRIPTOR_TYPE,	//descriptor type
-		0x00,	// Interface Number
-		0x00,	// Alternate Number
-		0x01,  // Number of Endpoints
+		0x09,  									//bLength
+		USB_INTERFACE_DESCRIPTOR_TYPE,			//descriptor type
+		0x00,									// Interface Number
+		0x00,									// Alternate Number
+		0x01,  									// Number of Endpoints
 		USB_DEVICE_CLASS_HUMAN_INTERFACE, 		// Interface Class
-		0, 										//USB_SUBCLASS_HID_BOOTINTERFACE,			// SubClass : Usually zero unless you're an HID
-		0, 										//USB_HID_INTERFACE_PROTOCOL_KEYBOARD,		// Protocol : Also mostly only used in HIDs
+		0, 										// SubClass : Usually zero unless you're an HID (not this one however)
+		0, 										// Protocol : Also mostly only used in HIDs
 		STR_INDEX_INTERFACE,
 
 		/* HID Descriptor: Keyboard */
-		0x09, //bLength
-		0x21,		// This is of HID descriptor type
-		0x01,		// HID spec. version LOW BIT
-		0x01,		// HID spec. version HIGH BIT
-		0x00,		// No country code
-		0x01,		// One additional descriptor
-		0x22,		// of type HID Report
-		0x2D,		// bDescriptorLength_L
-		0x00,		// bDescriptorLength_H
+		0x09, 									//bLength
+		0x21,									// This is of HID descriptor type
+		0x01,									// HID spec. version LOW BIT
+		0x01,									// HID spec. version HIGH BIT
+		0x00,									// No country code
+		0x01,									// One additional descriptor
+		0x22,									// of type HID Report
+		0x2D,									// bDescriptorLength_L
+		0x00,									// bDescriptorLength_H
 
 		/* HID Keyboard Endpoint Descriptor: ENDP02 Interrupt IN */
-		0x07, 	//bLength
-		USB_ENDPOINT_DESCRIPTOR_TYPE,		//bDescriptorType
-		0x81,								//bEndpointAddress --ENDP01 IN (I think the 8 means IN and 0 is OUT)
-		USB_ENDPOINT_TYPE_INTERRUPT,		//bmAttributes
-		0x08,								//wMaxPacketSize -- This is size of input report. Configure Endpoint accordingly
-		0x00,								//wMaxPacketSize
-		0x14								//bInterval -- Interval for polling in milliseconds
+		0x07, 									//bLength
+		USB_ENDPOINT_DESCRIPTOR_TYPE,			//bDescriptorType
+		0x81,									//bEndpointAddress --ENDP01 IN (I think the 8 means IN and 0 is OUT)
+		USB_ENDPOINT_TYPE_INTERRUPT,			//bmAttributes
+		0x08,									//wMaxPacketSize -- This is size of input report. Configure Endpoint accordingly
+		0x00,									//wMaxPacketSize
+		0x14									//bInterval -- Interval for polling in milliseconds
 };
 
 USB_CONFIGURATION_DESCRIPTOR ConfigDescr =
@@ -126,78 +129,6 @@ USB_CONFIGURATION_DESCRIPTOR ConfigDescr =
 		0xC0, 									//bmAttributes, Want self powered and remote wakeup
 		0x00
 };
-
-USB_INTERFACE_DESCRIPTOR InterfaceDescr0 =
-{
-		sizeof(USB_INTERFACE_DESCRIPTOR),  //bLength
-		USB_INTERFACE_DESCRIPTOR_TYPE,	//descriptor type
-		0,	// Interface Number
-		0,	// Alternate Number
-		1,  // Number of Endpoints
-		USB_DEVICE_CLASS_HUMAN_INTERFACE, 		// Interface Class
-		USB_SUBCLASS_CODE_UNKNOWN, 				//USB_SUBCLASS_HID_BOOTINTERFACE,			// SubClass : Usually zero unless you're an HID
-		USB_PROTOCOL_CODE_UNKNOWN, 	//USB_HID_INTERFACE_PROTOCOL_KEYBOARD,		// Protocol : Also mostly only used in HIDs
-		STR_INDEX_INTERFACE
-};
-
-/*
-USB_INTERFACE_DESCRIPTOR InterfaceDescr1 =
-{
-    sizeof(USB_INTERFACE_DESCRIPTOR),
-    USB_INTERFACE_DESCRIPTOR_TYPE,
-    0,//bInterfaceNumber
-    1,//bAlternateSetting
-    NUM_ENDPOINTS,
-    USB_CLASS_CODE_UNKNOWN,
-    USB_SUBCLASS_CODE_UNKNOWN,
-    USB_PROTOCOL_CODE_UNKNOWN,
-    0//STR_INDEX_INTERFACE
-};
-*/
-/*
-USB_ENDPOINT_DESCRIPTOR EP_Descr[4] =
-{
-
-    {
-        sizeof(USB_ENDPOINT_DESCRIPTOR),
-        USB_ENDPOINT_DESCRIPTOR_TYPE,
-        0x03,//EP03, 0x4, OUT
-        USB_ENDPOINT_TYPE_BULK,
-        SWAP(NONISO_FIFOSIZE_64),
-        0
-    },
-
-
-    {
-        sizeof(USB_ENDPOINT_DESCRIPTOR),
-        USB_ENDPOINT_DESCRIPTOR_TYPE,
-        0x84,// EP4, 0x5, IN
-        USB_ENDPOINT_TYPE_BULK,
-        SWAP(NONISO_FIFOSIZE_64),
-        0
-    },
-
-
-    {
-        sizeof(USB_ENDPOINT_DESCRIPTOR),
-        USB_ENDPOINT_DESCRIPTOR_TYPE,
-        0x05,// EP5 ISO OUT
-        USB_ENDPOINT_TYPE_ISOCHRONOUS,
-        SWAP(ISO_FIFOSIZE_512),
-        1
-    },
-
-
-    {
-        sizeof(USB_ENDPOINT_DESCRIPTOR),
-        USB_ENDPOINT_DESCRIPTOR_TYPE,
-        0x86,// EP6 ISO IN
-        USB_ENDPOINT_TYPE_ISOCHRONOUS,
-        SWAP(ISO_FIFOSIZE_512),
-        1
-    },
-};
-*/
 
 unsigned char code REPORT_DESCRIPTOR2[45] =
 {
@@ -226,7 +157,7 @@ unsigned char code REPORT_DESCRIPTOR2[45] =
 		0xc0		// END_COLLECTION
 };
 
-unsigned char code REPORT_DESCRIPTOR[45] =
+unsigned char code REPORT_DESCRIPTOR[45] = //This smaller report descriptor is unused
 {
 		0x05,	//USAGE_PAGE (Generic_Desktop)
 		0x01,
@@ -313,20 +244,20 @@ USB_STRING_SERIALNUMBER_DESCRIPTOR  strSerialNum =
     sizeof(strSerialNum),
     USB_STRING_DESCRIPTOR_TYPE,
    {
-    'M',0,
-    'y',0,
-    'D',0,
-    'e',0,
+    'G',0,
+    'E',0,
+    'S',0,
+    'T',0,
 
-    'v',0,
-    'i',0,
-    'c',0,
-    'e',0,
+    'U',0,
+    'R',0,
+    'E',0,
+    'G',0,
 
-    'K',0,
-    'e',0,
-    'y',0,
-    'B',0
+    'L',0,
+    'O',0,
+    'V',0,
+    'E',0
    }
 };
 

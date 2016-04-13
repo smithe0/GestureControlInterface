@@ -1,5 +1,5 @@
 obj/default/MAINLOOP.o: MAINLOOP.c BasicTyp.h mainloop.h usb.h BASICTYP.h \
-  Hal4D13.h chap_9.h D13BUS.h HID.h usb_irq.h
+  Hal4D13.h chap_9.h HID.h usb_irq.h
 
 BasicTyp.h:
 
@@ -12,8 +12,6 @@ BASICTYP.h:
 Hal4D13.h:
 
 chap_9.h:
-
-D13BUS.h:
 
 HID.h:
 

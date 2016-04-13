@@ -143,14 +143,12 @@ ELF := FinalFlashedDE2.elf
 
 # Paths to C, C++, and assembly source files.
 C_SRCS += CHAP_9.c
-C_SRCS += D13BUS.c
 C_SRCS += HAL4D13.c
 C_SRCS += HID.c
 C_SRCS += ISR.c
-C_SRCS += IntegratedMain.c
 C_SRCS += MAINLOOP.c
-C_SRCS += hello_world.c
 C_SRCS += usb_irq.c
+C_SRCS += main.c
 CXX_SRCS :=
 ASM_SRCS :=
 
